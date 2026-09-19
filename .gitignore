@@ -1,0 +1,42 @@
+# --- OS / editors ---
+.DS_Store
+Thumbs.db
+*.swp
+
+# AI agent instructions
+AGENTS.md
+**/AGENTS.md
+
+# --- IDE ---
+.idea/*
+!.idea/.gitignore
+
+# --- Environment / secrets ---
+.env
+.env.*
+!.env.example
+
+# --- Backend (Maven / Spring Boot) ---
+backend/target/
+backend/.flattened-pom.xml
+*.log
+
+# --- Frontend (Node / Vite) ---
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# --- Mobile (Flutter) ---
+mobile/.dart_tool/
+mobile/.packages
+mobile/build/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/ios/Pods/
+mobile/ios/.symlinks/
+mobile/android/.gradle/
+mobile/android/local.properties
+mobile/**/GeneratedPluginRegistrant.*
+
+# --- Misc ---
+*.iml
