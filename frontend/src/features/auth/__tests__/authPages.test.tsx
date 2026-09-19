@@ -35,6 +35,20 @@ describe('LoginPage', () => {
 
     expect(await screen.findByText('Enter a valid email address')).toBeInTheDocument()
   })
+
+  it('toggles password visibility', async () => {
+    const user = userEvent.setup()
+    renderWithProviders(<LoginPage />)
+
+    const password = screen.getByLabelText(/^password/i)
+    expect(password).toHaveAttribute('type', 'password')
+
+    await user.click(screen.getByRole('button', { name: /show password/i }))
+    expect(password).toHaveAttribute('type', 'text')
+
+    await user.click(screen.getByRole('button', { name: /hide password/i }))
+    expect(password).toHaveAttribute('type', 'password')
+  })
 })
 
 describe('RegisterPage', () => {
@@ -82,5 +96,27 @@ describe('RegisterPage', () => {
     expect(
       await screen.findByText('An account with this email already exists'),
     ).toBeInTheDocument()
+  })
+
+  it('toggles password and confirm password visibility', async () => {
+    const user = userEvent.setup()
+    renderWithProviders(<RegisterPage />)
+
+    const password = screen.getByLabelText(/^password/i)
+    const confirmPassword = screen.getByLabelText(/confirm password/i)
+    expect(password).toHaveAttribute('type', 'password')
+    expect(confirmPassword).toHaveAttribute('type', 'password')
+
+    const toggleButtons = screen.getAllByRole('button', { name: /show password/i })
+    expect(toggleButtons).toHaveLength(2)
+
+    await user.click(toggleButtons[0])
+    expect(password).toHaveAttribute('type', 'text')
+    expect(confirmPassword).toHaveAttribute('type', 'password')
+
+    await user.click(toggleButtons[1])
+    await user.click(toggleButtons[0])
+    expect(password).toHaveAttribute('type', 'password')
+    expect(confirmPassword).toHaveAttribute('type', 'text')
   })
 })
