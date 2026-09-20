@@ -7,9 +7,9 @@ export interface Credentials {
 }
 
 export function loginApi(payload: Credentials): Promise<AuthResponse> {
-  return http.post<AuthResponse>('/api/auth/login', payload).then((r) => r.data)
+  return http.post<AuthResponse>('/auth/login', payload).then((r) => r.data)
 }
 
 export function registerApi(payload: Credentials): Promise<AuthResponse> {
-  return http.post<AuthResponse>('/api/auth/register', payload).then((r) => r.data)
+  return http.post<AuthResponse>('/auth/register', payload).then((r) => r.data)
 }

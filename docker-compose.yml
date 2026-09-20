@@ -27,14 +27,26 @@ services:
       retries: 10
       start_period: 30s
 
+  adminer:
+    image: adminer:4.8.1
+    container_name: task-manager-adminer
+    restart: unless-stopped
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql
+    ports:
+      - "${ADMINER_PORT:-8081}:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
   backend:
     build:
       context: ./backend
     container_name: task-manager-backend
     restart: unless-stopped
     environment:
-      DB_HOST: mysql
-      DB_PORT: 3306
+      DB_HOST: ${DB_HOST:-mysql}
+      DB_PORT: ${DB_PORT:-3306}
       DB_NAME: ${DB_NAME:-taskmanager}
       DB_USERNAME: ${DB_USERNAME:-taskuser}
       DB_PASSWORD: ${DB_PASSWORD:-task_password}
@@ -60,7 +72,7 @@ services:
     build:
       context: ./frontend
       args:
-        VITE_API_URL: /api
+        VITE_API_URL: ${VITE_API_URL:-/api}
     container_name: task-manager-frontend
     restart: unless-stopped
     ports:
